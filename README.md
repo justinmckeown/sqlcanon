@@ -3,20 +3,19 @@
 Normalize semantically equivalent SQL into a canonical form for diffing, caching, duplicate detection, and privacy research. Library + CLI. Built with Python, OOP, and SOLID design principles.
 
 <p align="left">
-  <a href="https://github.com/OWNER/REPO/actions"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/OWNER/REPO/ci.yml?branch=main"></a>
+  <a href="https://github.com/justinmckeown/sqlcanon/actions"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/OWNER/REPO/ci.yml?branch=main"></a>
   <img alt="Python" src="https://img.shields.io/badge/python-3.10%20|%203.11%20|%203.12-blue">
   <img alt="Lint" src="https://img.shields.io/badge/lint-ruff-informational">
   <img alt="Types" src="https://img.shields.io/badge/types-mypy-informational">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-green">
 </p>
 
-> ℹ️ **Note:** Replace `OWNER/REPO` in the badge URLs with your GitHub org/user and repo name.
 
 ---
 
 ## 🧭 Overview
 
-`sqlcanon` helps teams compare, deduplicate, and cache SQL by transforming queries into a **stable, canonical form**. It exposes both a **Python API** and a **CLI** so you can integrate it into apps, ETL jobs, or CI checks.
+`sqlcanon` helps teams compare, deduplicate, and cache SQL by transforming queries into a **stable, canonical form**. It exposes both a **Python API** and a **CLI** so you can integrate it into apps, ETL jobs, or CI checks, or use it for privacy research.
 
 **Use‑cases**  
 - Detect duplicates across dashboards/ETL jobs  
@@ -31,7 +30,7 @@ Normalize semantically equivalent SQL into a canonical form for diffing, caching
 - **Parser abstraction** via a lightweight adapter (swapable later)
 - **Normalization pipeline** with focused passes (SRP):
   - `case_keywords` — standardize keyword case (UPPER/lower)
-  - `normalize_literals` — replace string/numeric literals with placeholders
+  - `normalise_literals` — replace string/numeric literals with placeholders
   - `sort_in_list` — deterministically sort `IN (...)` lists
   - `normalize_predicates` — sort top‑level `AND` terms (skips if `OR` is present for safety)
 - **Configurable via TOML** (top-level keys or `[sqlcanon]` table)
@@ -336,7 +335,7 @@ See **CONTRIBUTING.md** for development workflow, style, and PR checklist.
 
 ## 📄 License
 
-MIT — see `LICENSE` (add one if your repo doesn’t have it yet).
+Apache License 2.0 — see `LICENSE`
 
 ---
 
