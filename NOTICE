@@ -1,0 +1,10 @@
+sqlcanon
+Copyright (c) 2025 Justin McKeown
+
+This product includes software developed by the sqlcanon contributors.
+
+Third-party notices (not a comprehensive list):
+- Typer (MIT) — https://github.com/tiangolo/typer
+- SQLAlchemy (MIT, examples only) — https://www.sqlalchemy.org/
+- psycopg (LGPL-3.0-or-later with exceptions, examples only) — https://www.psycopg.org/
+- asyncpg (BSD-3-Clause, examples only) — https://github.com/MagicStack/asyncpg

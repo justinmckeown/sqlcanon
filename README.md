@@ -1,13 +1,13 @@
 # 🚀 sqlcanon — SQL Query Canonicalizer
 
-Normalize semantically equivalent SQL into a canonical form for diffing, caching, duplicate detection, and privacy research. Library + CLI. Built with Python, OOP, and SOLID design principles.
+Normalise semantically equivalent SQL into a canonical form for diffing, caching, duplicate detection, and privacy research. Library + CLI. Built with Python, OOP, and SOLID design principles.
 
 <p align="left">
   <a href="https://github.com/justinmckeown/sqlcanon/actions"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/OWNER/REPO/ci.yml?branch=main"></a>
   <img alt="Python" src="https://img.shields.io/badge/python-3.10%20|%203.11%20|%203.12-blue">
   <img alt="Lint" src="https://img.shields.io/badge/lint-ruff-informational">
   <img alt="Types" src="https://img.shields.io/badge/types-mypy-informational">
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-green">
+  <img alt="License" src="https://img.shields.io/badge/license-Apache--2.0-green">
 </p>
 
 
