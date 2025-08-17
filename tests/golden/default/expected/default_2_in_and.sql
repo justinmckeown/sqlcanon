@@ -1,0 +1,1 @@
+SELECT * FROM t WHERE a IN (__NUM__, __NUM__, __NUM__) AND b=__NUM__ AND c='__STR__'

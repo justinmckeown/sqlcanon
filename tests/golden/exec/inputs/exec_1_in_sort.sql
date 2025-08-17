@@ -1,0 +1,1 @@
+select * from t where a in (3,1,2)

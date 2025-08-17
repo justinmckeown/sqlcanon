@@ -1,12 +1,13 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any
 
 try:  # Python 3.11+
-    import tomllib  # type: ignore[attr-defined]
+    import tomllib  # stlib TOML
 except ModuleNotFoundError:  # pragma: no cover
-    tomllib = None  # type: ignore[assignment]
+    tomllib = None  # fallback handled below
 
 from .model import Config
 

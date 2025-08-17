@@ -95,5 +95,5 @@ class NormalisePredicates(BasePass):
         terms_sorted = sorted(terms, key=lambda s: s.lower())
         new_where = " AND ".join(terms_sorted)
 
-        new_text = text[:start] + new_where + tail[end:]
+        new_text = text[:start] + " " + new_where + tail[end:]
         return AstNode(new_text)

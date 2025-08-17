@@ -1,0 +1,2 @@
+psycopg>=3
+asyncpg>=0.29

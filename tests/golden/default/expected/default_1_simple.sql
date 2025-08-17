@@ -1,0 +1,1 @@
+SELECT a FROM t WHERE b = __NUM__

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
+from typing import Literal
 
 import typer
 
@@ -11,14 +11,24 @@ from ..config.loader import load_config_file
 app = typer.Typer(help="sqlcanon — SQL Query Canonicalizer")
 
 
-def _load_cfg(config_path: Optional[Path], keyword_case: Optional[str]) -> Config:
-    if config_path:
-        cfg = load_config_file(config_path)
-    else:
-        cfg = Config()
+KEYWORD_CASE = Literal["upper", "lower"]
 
-    # Allow a simple CLI override for keyword case
-    if keyword_case in {"upper", "lower"}:
+
+# helper to coerce/narrow a str|None into our KeywordCase|None - mypy is quite strict
+def _coerce_keyword_case(val: str | None) -> KEYWORD_CASE | None:
+    if val is None:
+        return None
+    v = val.lower()
+    if v == "upper":
+        return "upper"
+    if v == "lower":
+        return "lower"
+    raise typer.BadParameter("keyword-case must be 'upper' or 'lower'")
+
+
+def _load_cfg(config_path: Path | None, keyword_case: KEYWORD_CASE | None) -> Config:
+    cfg = load_config_file(config_path) if config_path else Config()
+    if keyword_case is not None:
         cfg = Config(
             keyword_case=keyword_case,
             identifier_case=cfg.identifier_case,
@@ -31,39 +41,41 @@ def _load_cfg(config_path: Optional[Path], keyword_case: Optional[str]) -> Confi
 @app.command()
 def normalize(
     query: str,
-    config: Optional[Path] = typer.Option(None, "--config", "-c", help="Path to a TOML config"),
-    keyword_case: Optional[str] = typer.Option(
+    config: Path | None = typer.Option(None, "--config", "-c", help="Path to a TOML config"),
+    keyword_case: str | None = typer.Option(
         None, "--keyword-case", "-k", help="Override: 'upper' or 'lower'"
     ),
 ):
-    """Normalize a SQL query to canonical form."""
-    cfg = _load_cfg(config, keyword_case)
+    """Normalize (UK spelling supported internally) a SQL query to canonical form."""
+    cfg = _load_cfg(config, _coerce_keyword_case(keyword_case))
     canon = Canonicalizer()
-    print(canon.normalize(query, cfg))
+    print(canon.normalise(query, cfg))  # call the UK method you implemented
 
 
 @app.command("normalise")
 def normalise_cmd(
     query: str,
-    config: Optional[Path] = typer.Option(None, "--config", "-c"),
-    keyword_case: Optional[str] = typer.Option(None, "--keyword-case", "-k"),
+    config: Path | None = typer.Option(None, "--config", "-c", help="Path to a TOML config"),
+    keyword_case: str | None = typer.Option(
+        None, "--keyword-case", "-k", help="Override: 'upper' or 'lower'"
+    ),
 ):
-    cfg = _load_cfg(config, keyword_case)
+    """Normalise a SQL query to canonical form."""
+    cfg = _load_cfg(config, _coerce_keyword_case(keyword_case))
     canon = Canonicalizer()
-    print(canon.normalize(query, cfg))
+    print(canon.normalise(query, cfg))
 
 
-
-@app.command()
-def hash(  # noqa: A003 (function name collides with built-in)
+@app.command()  # noqa: A003
+def hash(
     query: str,
-    config: Optional[Path] = typer.Option(None, "--config", "-c", help="Path to a TOML config"),
-    keyword_case: Optional[str] = typer.Option(
+    config: Path | None = typer.Option(None, "--config", "-c", help="Path to a TOML config"),
+    keyword_case: str | None = typer.Option(
         None, "--keyword-case", "-k", help="Override: 'upper' or 'lower'"
     ),
 ):
     """Compute a stable equivalence hash for a SQL query."""
-    cfg = _load_cfg(config, keyword_case)
+    cfg = _load_cfg(config, _coerce_keyword_case(keyword_case))
     canon = Canonicalizer()
     print(canon.hash(query, cfg))
 

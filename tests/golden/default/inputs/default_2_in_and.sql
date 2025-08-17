@@ -1,0 +1,1 @@
+select * from t where b=1 and a in (3,2,1) and c='x'

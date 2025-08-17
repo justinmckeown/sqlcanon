@@ -241,9 +241,54 @@ repo-root/
     test_passes.py
     test_config_loader.py
 ```
+## 🇬🇧🇺🇸 UK/US spelling aliases
+sqlcanon supports both spellings for developer ergonomics:
+
+### Methods
+
+```bash
+canon.normalize(sql)   # US
+canon.normalise(sql)   # UK (alias of normalize)
+```
+
+### CLI
+
+```bash
+sqlcanon normalize  "select * from t where …"
+sqlcanon normalise  "select * from t where …"  # alias of `normalize`
+```
+
+### Pass names (config & code)
+Pass registry accepts either spelling where applicable:
+
+```toml
+# .sqlcanon.toml (both work)
+passes = ["case_keywords", "sort_in_list", "normalize_predicates"]
+# or
+passes = ["case_keywords", "sort_in_list", "normalise_predicates"]
+```
+
+Both of the following work
+
+```python
+# Python (both work)
+Config(passes=["case_keywords", "sort_in_list", "normalize_predicates"])
+Config(passes=["case_keywords", "sort_in_list", "normalise_predicates"])
+```
+
+How it works: pass names are resolved through a small alias map (e.g., normalise_* ↔ normalize_*) before lookup. If a name isn’t recognised after alias resolution, a clear KeyError is raised.
+
+**Tip:** pick one spelling for your codebase (e.g., UK in source), and use whichever spelling feels natural in configs/CLI—both are accepted.
+
+#### Troubleshooting:
+If you see KeyError: `normalise_predicates` (or the US equivalent):
+
+- ensure the pass is registered in the project’s pass registry,
+- check for typos, and
+- update to the latest version of this package if you recently added alias support.
+
 
 ---
-
 ## 🧪 Testing & Quality
 
 ```bash

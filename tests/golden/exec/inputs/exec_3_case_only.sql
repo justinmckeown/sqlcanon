@@ -1,0 +1,1 @@
+SeLeCt a FROM t WHERE b = 1

@@ -1,0 +1,1 @@
+SELECT * FROM t WHERE a=__NUM__ OR b=__NUM__ AND c=__NUM__

@@ -1,0 +1,1 @@
+SELECT * FROM t WHERE a IN (1, 2, 3) AND b=1 AND c='x'
