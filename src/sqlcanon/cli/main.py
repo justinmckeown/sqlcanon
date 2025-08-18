@@ -10,12 +10,11 @@ from ..config.loader import load_config_file
 
 app = typer.Typer(help="sqlcanon — SQL Query Canonicalizer")
 
-
-KEYWORD_CASE = Literal["upper", "lower"]
+KeywordCase = Literal["upper", "lower"]
 
 
 # helper to coerce/narrow a str|None into our KeywordCase|None - mypy is quite strict
-def _coerce_keyword_case(val: str | None) -> KEYWORD_CASE | None:
+def _coerce_keyword_case(val: str | None) -> KeywordCase | None:
     if val is None:
         return None
     v = val.lower()
@@ -26,7 +25,7 @@ def _coerce_keyword_case(val: str | None) -> KEYWORD_CASE | None:
     raise typer.BadParameter("keyword-case must be 'upper' or 'lower'")
 
 
-def _load_cfg(config_path: Path | None, keyword_case: KEYWORD_CASE | None) -> Config:
+def _load_cfg(config_path: Path | None, keyword_case: KeywordCase | None) -> Config:
     cfg = load_config_file(config_path) if config_path else Config()
     if keyword_case is not None:
         cfg = Config(
